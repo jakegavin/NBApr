@@ -1,0 +1,26 @@
+{% load staticfiles %}
+{% load ranking_extras %}
+<html>
+    <head>
+        <title>NBA Power Rankings</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'ranking/style.css' %}" />
+    </head>
+    <body>
+    <div id="container">
+        <h1>Averaged Power Rankings</h1>
+        <p>
+            {% for team in teams %}
+                {{ forloop.counter }}: {{ team }} - Average Rank ({{ team.decimal_rank }}) 
+                <br>
+            {% endfor %}
+        </p>
+        <hr>
+        <footer>
+            Averages based on {{ num_sites }} sites.
+            <br>
+            Data pulled from: {% for site in sites %}{% if forloop.first %}{% else %}{% if forloop.last %}, and {% else %},  {% endif %}{% endif %}<a href="{{ site.url1 }}">{{ site.name }}</a>{% endfor %}
+        </footer>
+    </div>
+
+    </body>
+</html>
