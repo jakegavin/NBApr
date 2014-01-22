@@ -7,3 +7,5 @@ This is a django-powered web app that will parse the source from a list of html 
     *   Only pull new rankings from the site if the model hasn't been modified in 24
 *   Improve CSS
 *   Add custom filter to remove trailing comma rather than messy template tags
+*   76ers not being picked up on NBA.com. It has 'sixers.gif' but regex looks for '76ers.gif'
+*   Handle ties in average rank appropriately
