@@ -8,12 +8,14 @@
     <body>
     <div id="container">
         <h1>Averaged Power Rankings</h1>
+        <div style="margin-left: 2em;"
         <p>
             {% for team in teams %}
                 {{ forloop.counter }}: {{ team }} - Average Rank ({{ team.decimal_rank }}) 
                 <br>
             {% endfor %}
         </p>
+        </div>
         <hr>
         <footer>
             Averages based on {{ num_sites }} sites.
