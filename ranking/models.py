@@ -13,7 +13,26 @@ class Team(models.Model):
             return self.city + ' Trail ' + self.name
         else:
             return self.city + ' ' + self.name
-
+    
+    def update_rank(self, site_sources):
+        '''Update the rank given site_sources dict which has the source for all ranking sites'''
+        ranks = []
+        for site in site_sources.keys():
+            source_code = site_sources[site]
+            regex_pieces = site.split_regex()
+            regex_term = regex_pieces[0] + re.escape(self.name) + regex_pieces[1]
+            regex = re.findall(regex_term, source_code, re.I)
+            if regex:
+                ranks.append(int(regex[0][0]))
+            else:
+                pass
+        if ranks:
+            self.decimal_rank = round(float(sum(ranks)) / float(len(ranks)), 3)
+            self.current_rank = int(round(self.decimal_rank))
+        else:
+            self.decimal_rank = None
+            self.current_rank = None
+        self.save()
 
 class RankingSite(models.Model):
     name = models.CharField(max_length=70)

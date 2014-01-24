@@ -22,23 +22,7 @@ def AvgRankingView(request):
             source_codes[site] = urllib2.urlopen(site.url1).read()
 
     for team in teams:
-        ranks = []
-        for site in sites:
-            source_code = source_codes[site]
-            regex_pieces = site.split_regex()
-            regex_term = regex_pieces[0] + re.escape(team.name) + regex_pieces[1]
-            regex = re.findall(regex_term, source_code, re.I)
-            if regex:
-                ranks.append(int(regex[0][0]))
-            else:
-                pass
-        if ranks:
-            team.decimal_rank = round(float(sum(ranks)) / float(len(ranks)), 3)
-            team.current_rank = int(round(team.decimal_rank))
-        else:
-            team.decimal_rank = None
-            team.current_rank = None
-        team.save()
+        team.update_rank(source_codes)
     
     # Sort the teams list by decimal_rank
     def sort_by_decrank(Team):
